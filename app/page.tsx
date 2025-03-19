@@ -333,11 +333,9 @@ ${results.bnbAmount ? `MAX BNB (Wei): ${results.bnbAmount}` : ""}
                 )}
               </div>
 
-              <details className="bg-slate-900 rounded-lg border border-slate-700 p-4">
-                <summary className="font-medium text-slate-300 cursor-pointer">
-                  Mint Parameters
-                </summary>
-                <div className="mt-4 space-y-2 text-sm text-slate-400 overflow-x-auto">
+              <div className="bg-slate-900 rounded-lg border border-slate-700 p-4">
+                <h3 className="font-medium text-slate-300 mb-3">Mint Parameters</h3>
+                <div className="space-y-2 text-sm text-slate-400 overflow-x-auto">
                   <p className="break-words whitespace-pre-wrap">{results.mintParams}</p>
                   {results.extractedKeccak && (
                     <p className="break-words">
@@ -366,7 +364,7 @@ ${results.bnbAmount ? `MAX BNB (Wei): ${results.bnbAmount}` : ""}
                     </p>
                   )}
                 </div>
-              </details>
+              </div>
             </div>
           )}
         </div>
