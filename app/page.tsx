@@ -2,7 +2,6 @@
 
 import ContractChecker from "@/components/ContractChecker";
 import TelegramPromo from "@/components/TelegramPromo";
-import Navigation from "@/components/Navigation";
 
 export default function Home() {
   return (
