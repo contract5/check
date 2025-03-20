@@ -2,481 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-
-// Define TypeScript interfaces for our data structures
-interface LinkItem {
-  text: string;
-  url: string;
-}
-
-interface ImageItem {
-  path: string;
-  alt: string;
-}
-
-interface SubStep {
-  title?: string;
-  description: string;
-  image?: string;
-  images?: ImageItem[];
-}
-
-interface Step {
-  id: number;
-  title: string;
-  description: string;
-  links?: LinkItem[];
-  image?: string;
-  images?: ImageItem[];
-  imageAlt?: string;
-  subSteps?: SubStep[];
-  details?: string[];
-}
-
-interface TutorialSection {
-  section: string;
-  steps: Step[];
-}
-
-interface SectionNavItem {
-  title: string;
-  firstStepId: number;
-}
-
-// Tutorial data structure based on numbered steps
-const tutorialSteps: TutorialSection[] = [
-  {
-    section: "Installing Rabby Wallet on iOS and Android",
-    steps: [
-      {
-        id: 1,
-        title: "Install Rabby Wallet",
-        description:
-          "Install Rabby Wallet from the App Store (iOS) or Google Play Store (Android).",
-        links: [
-          { text: "iOS App Store", url: "link.com" },
-          { text: "Android Google Play", url: "link.com" },
-        ],
-        image: "/images/1.jpg",
-        imageAlt: "Rabby Wallet app store page",
-      },
-      {
-        id: 2,
-        title: "Create a new address",
-        description: "Open Rabby Wallet and create a new wallet address.",
-        image: "/images/2.jpg",
-        imageAlt: "Creating a new wallet address in Rabby",
-      },
-    ],
-  },
-  {
-    section: "Enabling the Rabby DApp Browser",
-    steps: [
-      {
-        id: 3,
-        title: "Add BNB to your wallet",
-        description:
-          "Add approximately $1 worth of BNB to your wallet to cover network and gas fees.",
-        image: "/images/3.jpg",
-        imageAlt: "Adding BNB to wallet",
-      },
-      {
-        id: 4,
-        title: "Access the DApp browser",
-        description:
-          "After adding BNB, the DApp browser feature is enabled. On iOS, tap DApps or Website.",
-        image: "/images/4.jpg",
-        imageAlt: "Accessing DApp browser in Rabby",
-      },
-    ],
-  },
-  {
-    section: "Deploying the Hex Contract Using MyEtherWallet",
-    steps: [
-      {
-        id: 5,
-        title: "Open MyEtherWallet",
-        description:
-          "Open the DApp browser and visit: https://myetherwallet.com/",
-        image: "/images/5.jpg",
-        imageAlt: "MyEtherWallet homepage",
-      },
-      {
-        id: 6,
-        title: "Access wallet",
-        description: "Click 'Access My Wallet' to connect Rabby Wallet.",
-        image: "/images/6.jpg",
-        imageAlt: "Access wallet screen on MyEtherWallet",
-      },
-      {
-        id: 7,
-        title: "Select Browser Extension",
-        description: "Select 'Browser Extension' to connect with Rabby.",
-        image: "/images/7.jpg",
-        imageAlt: "Selecting browser extension option",
-      },
-      {
-        id: 8,
-        title: "Change network",
-        description: "Change the network from Ethereum to BNB Smart Chain.",
-        image: "/images/8.jpg",
-        imageAlt: "Changing network to BNB Smart Chain",
-      },
-      {
-        id: 9,
-        title: "Select BNB and click 'Connect'",
-        description: "Select BNB and click 'Connect'.",
-        images: [
-          { path: "/images/9.jpg", alt: "Selecting BNB network" },
-          { path: "/images/10.jpg", alt: "Clicking Connect button" },
-        ],
-        imageAlt: "Connecting to BNB network",
-      },
-      {
-        id: 10,
-        title: "Verify network",
-        description:
-          "On MyEtherWallet, ensure the network is set to BNB Smart Chain.",
-        images: [
-          { path: "/images/11.jpg", alt: "Checking network settings" },
-          { path: "/images/12.jpg", alt: "Confirmed BNB Smart Chain network" },
-        ],
-        imageAlt: "Verifying BNB Smart Chain network",
-      },
-    ],
-  },
-  {
-    section: "Deploying the Contract",
-    steps: [
-      {
-        id: 11,
-        title: "Open menu",
-        description:
-          "Click the menu button (top-left corner) to open the menu.",
-        image: "/images/13.jpg",
-        imageAlt: "Opening the menu in MyEtherWallet",
-      },
-      {
-        id: 12,
-        title: "Navigate to Deploy Contract",
-        description: "Navigate to Contracts > Deploy Contract.",
-        image: "/images/14.jpg",
-        imageAlt: "Navigating to Deploy Contract option",
-      },
-      {
-        id: 13,
-        title: "Enter Bytecode and ABI",
-        description:
-          "In the Deploy Contract menu, the Bytecode and ABI fields will appear.",
-        subSteps: [
-          {
-            title: "For Bytecode:",
-            description:
-              "Open the Telegram channel, locate a posted Hex, and copy it. Click 'Opcode' to reveal the Hex.",
-            images: [
-              { path: "/images/15.jpg", alt: "Opening Telegram channel" },
-              { path: "/images/16.jpg", alt: "Revealing the Hex" },
-            ],
-          },
-          {
-            description: "Click the copy button to copy the Hex.",
-            image: "/images/17.jpg",
-          },
-          {
-            title: "For ABI/JSON:",
-            description: "Click the Opcode link to open and copy the ABI.",
-            images: [
-              { path: "/images/18.jpg", alt: "Opening ABI link" },
-              { path: "/images/19.jpg", alt: "ABI code displayed" },
-            ],
-          },
-          {
-            description: "Click the copy button to copy the ABI.",
-            image: "/images/20.jpg",
-          },
-        ],
-        imageAlt: "Entering bytecode and ABI",
-      },
-      {
-        id: 14,
-        title: "Name contract",
-        description: "Name the contract as 'Mint' and click 'Deploy Contract'.",
-        image: "/images/21.jpg",
-        imageAlt: "Naming the contract",
-      },
-      {
-        id: 15,
-        title: "Confirm transaction",
-        description: "Confirm and send the deployment transaction.",
-        image: "/images/22.jpg",
-        imageAlt: "Confirming the transaction",
-      },
-      {
-        id: 16,
-        title: "Sign approval",
-        description: "Click 'Sign' to approve the deployment.",
-        image: "/images/23.jpg",
-        imageAlt: "Signing the approval",
-      },
-      {
-        id: 17,
-        title: "Broadcast confirmation",
-        description:
-          "Click 'Confirm' to broadcast the contract deployment to the blockchain.",
-        image: "/images/24.jpg",
-        imageAlt: "Broadcasting confirmation",
-      },
-    ],
-  },
-  {
-    section: "Retrieving the Contract Address",
-    steps: [
-      {
-        id: 18,
-        title: "Copy your deployed contract address",
-        description: "Copy your deployed contract address from BscScan.",
-        subSteps: [
-          {
-            description: "Click 'View on BscScan' to check the transaction.",
-            image: "/images/25.jpg",
-          },
-          {
-            description:
-              "Scroll down to find the contract address under 'To:' (marked as 'Created'). Copy the contract address.",
-            image: "/images/26.jpg",
-          },
-        ],
-        imageAlt: "Retrieving contract address",
-      },
-    ],
-  },
-  {
-    section: "Checking Mint Parameters",
-    steps: [
-      {
-        id: 19,
-        title: "Use mint parameter checker",
-        description: "Use a mint parameter checker to verify your contract:",
-        details: [
-          "Web version: mintchecker.vercel.app/mintchecker",
-          "Local method (not available on iOS):",
-          "Open the HTML file in your browser.",
-          "Or, use a terminal to run the cURL command.",
-          "(All files are available in the Telegram channel.)",
-        ],
-        imageAlt: "Using the mint parameter checker",
-      },
-      {
-        id: 20,
-        title: "Input contract address",
-        description: "Input the contract address and click 'Check Contract'.",
-        image: "/images/27.jpg",
-        imageAlt: "Inputting contract address",
-      },
-      {
-        id: 21,
-        title: "Check minting status",
-        description:
-          "If minting is not enabled, you must manually call the function by adding BNB to your contract.",
-        details: [
-          "Most contracts require 0.1 BNB for minting.",
-          "The maximum BNB limit is specified in the mint parameters.",
-        ],
-        imageAlt: "Checking minting status",
-      },
-      {
-        id: 22,
-        title: "Enable minting",
-        description: "To enable minting:",
-        details: [
-          "Send BNB from the same wallet used for deployment to the contract address.",
-          "This ensures a contract call is made.",
-        ],
-        image: "/images/29.jpg",
-        imageAlt: "Enabling minting",
-      },
-      {
-        id: 23,
-        title: "Verify minting enabled",
-        description:
-          "After a successful transaction, check the mint parameters again to confirm minting is enabled.",
-        details: [
-          "90% of contracts enable minting at this stage.",
-          "If not, repeat the process until the contract is enabled.",
-        ],
-        image: "/images/30.jpg",
-        imageAlt: "Verifying minting is enabled",
-      },
-    ],
-  },
-  {
-    section: "Receiving Minted USDC",
-    steps: [
-      {
-        id: 24,
-        title: "Receive minted USDC",
-        description:
-          "Once minting is enabled, a contract interaction will occur.",
-        details: [
-          "The specified amount of USDC and BNB used for minting will be added to your wallet balance.",
-        ],
-        image: "/images/31.jpg",
-        imageAlt: "Receiving minted USDC",
-      },
-    ],
-  },
-];
-
-// Group steps by section for navigation
-const sections: SectionNavItem[] = tutorialSteps.map((section) => ({
-  title: section.section,
-  firstStepId: section.steps[0].id,
-}));
 
 export default function Tutorial() {
-  const [currentStep, setCurrentStep] = useState(1);
-
-  // Find the current step data
-  const findStepData = (
-    stepId: number
-  ): { section: string; step: Step } | null => {
-    for (const section of tutorialSteps) {
-      const step = section.steps.find((s) => s.id === stepId);
-      if (step) {
-        return { section: section.section, step };
-      }
-    }
-    return null;
-  };
-
-  const currentStepData = findStepData(currentStep);
-
-  // Get total number of steps
-  const totalSteps = tutorialSteps.reduce(
-    (total, section) => total + section.steps.length,
-    0
-  );
-
-  // Navigate to next or previous step
-  const goToNextStep = () => {
-    if (currentStep < totalSteps) {
-      setCurrentStep(currentStep + 1);
-    }
-  };
-
-  const goToPrevStep = () => {
-    if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
-    }
-  };
-
-  // Jump to a specific section's first step
-  const goToSection = (firstStepId: number) => {
-    setCurrentStep(firstStepId);
-  };
-
-  // Helper to render images (single or multiple)
-  const renderImages = (step: Step) => {
-    if (step.images) {
-      // Multiple images
-      return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {step.images.map((img, idx) => (
-            <div
-              key={idx}
-              className="relative w-full h-56 rounded overflow-hidden border border-slate-700"
-            >
-              <Image
-                src={img.path}
-                alt={img.alt}
-                fill
-                className="object-contain"
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-            </div>
-          ))}
-        </div>
-      );
-    } else if (step.image) {
-      // Single image
-      return (
-        <div className="relative w-full h-56 md:h-72 rounded overflow-hidden border border-slate-700">
-          <Image
-            src={step.image}
-            alt={step.imageAlt || step.title}
-            fill
-            className="object-contain"
-            sizes="(max-width: 768px) 100vw, 50vw"
-          />
-        </div>
-      );
-    }
-    return null;
-  };
-
-  // Render substeps
-  const renderSubSteps = (subSteps: SubStep[]) => {
-    return (
-      <div className="space-y-6 pl-4 border-l-2 border-slate-700 mt-4">
-        {subSteps.map((subStep, idx) => (
-          <div key={idx} className="ml-2">
-            {subStep.title && (
-              <h4 className="font-medium text-slate-300 mb-2">
-                {subStep.title}
-              </h4>
-            )}
-            <p className="text-slate-400 mb-3">{subStep.description}</p>
-
-            {subStep.images ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
-                {subStep.images.map((img, imgIdx) => (
-                  <div
-                    key={imgIdx}
-                    className="relative w-full h-48 rounded overflow-hidden border border-slate-700"
-                  >
-                    <Image
-                      src={img.path}
-                      alt={img.alt}
-                      fill
-                      className="object-contain"
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                    />
-                  </div>
-                ))}
-              </div>
-            ) : subStep.image ? (
-              <div className="relative w-full h-48 rounded overflow-hidden border border-slate-700 mt-3">
-                <Image
-                  src={subStep.image}
-                  alt={subStep.description}
-                  fill
-                  className="object-contain"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-              </div>
-            ) : null}
-          </div>
-        ))}
-      </div>
-    );
-  };
-
-  // Render additional details
-  const renderDetails = (details?: string[]) => {
-    if (!details || details.length === 0) return null;
-
-    return (
-      <ul className="mt-3 space-y-1 text-slate-300 list-disc pl-5">
-        {details.map((detail, idx) => (
-          <li key={idx}>{detail}</li>
-        ))}
-      </ul>
-    );
-  };
-
-  if (!currentStepData) return <div>Loading...</div>;
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white">
       <div className="max-w-4xl mx-auto px-4 py-10">
@@ -485,96 +12,579 @@ export default function Tutorial() {
             Contract Deployment Tutorial
           </h1>
 
-          {/* Navigation */}
-          <div className="mb-8">
-            <h2 className="text-lg font-semibold mb-3 text-slate-200">
-              Tutorial Sections
+          {/* Table of Contents */}
+          <div className="mb-8 p-4 bg-slate-750 rounded-lg border border-slate-700">
+            <h2 className="text-xl font-semibold mb-3 text-slate-200">Contents</h2>
+            <ul className="space-y-1 text-blue-400">
+              <li><a href="#section-1" className="hover:text-blue-300">Installing Rabby Wallet on iOS and Android</a></li>
+              <li><a href="#section-2" className="hover:text-blue-300">Enabling the Rabby DApp Browser</a></li>
+              <li><a href="#section-3" className="hover:text-blue-300">Deploying the Hex Contract Using MyEtherWallet</a></li>
+              <li><a href="#section-4" className="hover:text-blue-300">Deploying the Contract</a></li>
+              <li><a href="#section-5" className="hover:text-blue-300">Retrieving the Contract Address</a></li>
+              <li><a href="#section-6" className="hover:text-blue-300">Checking Mint Parameters</a></li>
+              <li><a href="#section-7" className="hover:text-blue-300">Receiving Minted USDC</a></li>
+            </ul>
+          </div>
+
+          {/* Section 1 */}
+          <div id="section-1" className="mb-10">
+            <h2 className="text-xl font-bold text-blue-400 mb-4 pb-2 border-b border-slate-700">
+              Installing Rabby Wallet on iOS and Android
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-              {sections.map((section, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToSection(section.firstStepId)}
-                  className={`text-left p-2 rounded ${
-                    currentStepData.section === section.title
-                      ? "bg-blue-600 text-white"
-                      : "bg-slate-700 text-slate-300 hover:bg-slate-600"
-                  }`}
-                >
-                  {section.title}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Current Step */}
-          <div className="mb-6">
-            <div className="flex justify-between items-center mb-4">
-              <button
-                onClick={goToPrevStep}
-                className="px-3 py-1 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-50 disabled:cursor-not-allowed"
-                disabled={currentStep === 1}
-              >
-                Previous
-              </button>
-              <div className="text-center">
-                <div className="text-sm text-slate-400 mb-1">
-                  {currentStepData.section}
+            
+            <div className="space-y-8">
+              <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
+                <h3 className="font-semibold text-lg mb-2">Step 1: Install Rabby Wallet</h3>
+                <p className="text-slate-300 mb-3">
+                  Install Rabby Wallet from the App Store (iOS) or Google Play Store (Android).
+                </p>
+                <div className="mb-3">
+                  <a href="link.com" className="text-blue-400 hover:text-blue-300 mr-4">iOS App Store</a>
+                  <a href="link.com" className="text-blue-400 hover:text-blue-300">Android Google Play</a>
                 </div>
-                <h2 className="text-lg font-bold text-slate-200">
-                  Step {currentStepData.step.id}: {currentStepData.step.title}
-                </h2>
+                <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
+                  <Image
+                    src="/images/1.jpg"
+                    alt="Rabby Wallet app store page"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
               </div>
-              <button
-                onClick={goToNextStep}
-                className="px-3 py-1 rounded bg-slate-700 hover:bg-slate-600 disabled:opacity-50 disabled:cursor-not-allowed"
-                disabled={currentStep === totalSteps}
-              >
-                Next
-              </button>
-            </div>
 
-            {/* Step content */}
-            <div className="mt-6 border border-slate-700 rounded-lg p-5 bg-slate-850">
-              <p className="text-slate-300 mb-5">
-                {currentStepData.step.description}
-              </p>
-
-              {/* Links if any */}
-              {currentStepData.step.links && (
-                <div className="mb-5">
-                  {currentStepData.step.links.map((link, i) => (
-                    <a
-                      key={i}
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-block mr-4 text-blue-400 hover:text-blue-300 underline"
-                    >
-                      {link.text}
-                    </a>
-                  ))}
+              <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
+                <h3 className="font-semibold text-lg mb-2">Step 2: Create a new address</h3>
+                <p className="text-slate-300 mb-3">
+                  Open Rabby Wallet and create a new wallet address.
+                </p>
+                <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
+                  <Image
+                    src="/images/2.jpg"
+                    alt="Creating a new wallet address in Rabby"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
                 </div>
-              )}
-
-              {/* Additional details */}
-              {renderDetails(currentStepData.step.details)}
-
-              {/* Main step image(s) */}
-              <div className="mt-5">{renderImages(currentStepData.step)}</div>
-
-              {/* Sub-steps if any */}
-              {currentStepData.step.subSteps &&
-                renderSubSteps(currentStepData.step.subSteps)}
+              </div>
             </div>
           </div>
 
-          {/* Progress indicator */}
-          <div className="w-full bg-slate-700 rounded-full h-2.5 mb-8">
-            <div
-              className="bg-gradient-to-r from-blue-500 to-emerald-400 h-2.5 rounded-full"
-              style={{ width: `${(currentStep / totalSteps) * 100}%` }}
-            ></div>
+          {/* Section 2 */}
+          <div id="section-2" className="mb-10">
+            <h2 className="text-xl font-bold text-blue-400 mb-4 pb-2 border-b border-slate-700">
+              Enabling the Rabby DApp Browser
+            </h2>
+            
+            <div className="space-y-8">
+              <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
+                <h3 className="font-semibold text-lg mb-2">Step 3: Add BNB to your wallet</h3>
+                <p className="text-slate-300 mb-3">
+                  Add approximately $1 worth of BNB to your wallet to cover network and gas fees.
+                </p>
+                <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
+                  <Image
+                    src="/images/3.jpg"
+                    alt="Adding BNB to wallet"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+              </div>
+
+              <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
+                <h3 className="font-semibold text-lg mb-2">Step 4: Access the DApp browser</h3>
+                <p className="text-slate-300 mb-3">
+                  After adding BNB, the DApp browser feature is enabled. On iOS, tap DApps or Website.
+                </p>
+                <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
+                  <Image
+                    src="/images/4.jpg"
+                    alt="Accessing DApp browser in Rabby"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Section 3 */}
+          <div id="section-3" className="mb-10">
+            <h2 className="text-xl font-bold text-blue-400 mb-4 pb-2 border-b border-slate-700">
+              Deploying the Hex Contract Using MyEtherWallet
+            </h2>
+            
+            <div className="space-y-8">
+              <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
+                <h3 className="font-semibold text-lg mb-2">Step 5: Open MyEtherWallet</h3>
+                <p className="text-slate-300 mb-3">
+                  Open the DApp browser and visit: https://myetherwallet.com/
+                </p>
+                <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
+                  <Image
+                    src="/images/5.jpg"
+                    alt="MyEtherWallet homepage"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+              </div>
+
+              <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
+                <h3 className="font-semibold text-lg mb-2">Step 6: Access wallet</h3>
+                <p className="text-slate-300 mb-3">
+                  Click 'Access My Wallet' to connect Rabby Wallet.
+                </p>
+                <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
+                  <Image
+                    src="/images/6.jpg"
+                    alt="Access wallet screen on MyEtherWallet"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+              </div>
+
+              <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
+                <h3 className="font-semibold text-lg mb-2">Step 7: Select Browser Extension</h3>
+                <p className="text-slate-300 mb-3">
+                  Select 'Browser Extension' to connect with Rabby.
+                </p>
+                <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
+                  <Image
+                    src="/images/7.jpg"
+                    alt="Selecting browser extension option"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+              </div>
+
+              <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
+                <h3 className="font-semibold text-lg mb-2">Step 8: Change network</h3>
+                <p className="text-slate-300 mb-3">
+                  Change the network from Ethereum to BNB Smart Chain.
+                </p>
+                <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
+                  <Image
+                    src="/images/8.jpg"
+                    alt="Changing network to BNB Smart Chain"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+              </div>
+
+              <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
+                <h3 className="font-semibold text-lg mb-2">Step 9: Select BNB and click 'Connect'</h3>
+                <p className="text-slate-300 mb-3">
+                  Select BNB and click 'Connect'.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
+                    <Image
+                      src="/images/9.jpg"
+                      alt="Selecting BNB network"
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+                  <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
+                    <Image
+                      src="/images/10.jpg"
+                      alt="Clicking Connect button"
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
+                <h3 className="font-semibold text-lg mb-2">Step 10: Verify network</h3>
+                <p className="text-slate-300 mb-3">
+                  On MyEtherWallet, ensure the network is set to BNB Smart Chain.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
+                    <Image
+                      src="/images/11.jpg"
+                      alt="Checking network settings"
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+                  <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
+                    <Image
+                      src="/images/12.jpg"
+                      alt="Confirmed BNB Smart Chain network"
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Section 4 */}
+          <div id="section-4" className="mb-10">
+            <h2 className="text-xl font-bold text-blue-400 mb-4 pb-2 border-b border-slate-700">
+              Deploying the Contract
+            </h2>
+            
+            <div className="space-y-8">
+              <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
+                <h3 className="font-semibold text-lg mb-2">Step 11: Open menu</h3>
+                <p className="text-slate-300 mb-3">
+                  Click the menu button (top-left corner) to open the menu.
+                </p>
+                <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
+                  <Image
+                    src="/images/13.jpg"
+                    alt="Opening the menu in MyEtherWallet"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+              </div>
+
+              <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
+                <h3 className="font-semibold text-lg mb-2">Step 12: Navigate to Deploy Contract</h3>
+                <p className="text-slate-300 mb-3">
+                  Navigate to Contracts > Deploy Contract.
+                </p>
+                <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
+                  <Image
+                    src="/images/14.jpg"
+                    alt="Navigating to Deploy Contract option"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+              </div>
+
+              <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
+                <h3 className="font-semibold text-lg mb-2">Step 13: Enter Bytecode and ABI</h3>
+                <p className="text-slate-300 mb-3">
+                  In the Deploy Contract menu, the Bytecode and ABI fields will appear.
+                </p>
+                
+                <h4 className="font-medium text-slate-300 mb-2">For Bytecode:</h4>
+                <p className="text-slate-300 mb-3">
+                  Open the Telegram channel, locate a posted Hex, and copy it. Click 'Opcode' to reveal the Hex.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <div className="relative w-full h-48 rounded overflow-hidden border border-slate-700">
+                    <Image
+                      src="/images/15.jpg"
+                      alt="Opening Telegram channel"
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+                  <div className="relative w-full h-48 rounded overflow-hidden border border-slate-700">
+                    <Image
+                      src="/images/16.jpg"
+                      alt="Revealing the Hex"
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+                </div>
+                
+                <p className="text-slate-300 mb-2">
+                  Click the copy button to copy the Hex.
+                </p>
+                <div className="relative w-full h-48 rounded overflow-hidden border border-slate-700 mb-4">
+                  <Image
+                    src="/images/17.jpg"
+                    alt="Copying the Hex"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+                
+                <h4 className="font-medium text-slate-300 mb-2">For ABI/JSON:</h4>
+                <p className="text-slate-300 mb-3">
+                  Click the Opcode link to open and copy the ABI.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <div className="relative w-full h-48 rounded overflow-hidden border border-slate-700">
+                    <Image
+                      src="/images/18.jpg"
+                      alt="Opening ABI link"
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+                  <div className="relative w-full h-48 rounded overflow-hidden border border-slate-700">
+                    <Image
+                      src="/images/19.jpg"
+                      alt="ABI code displayed"
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+                </div>
+                
+                <p className="text-slate-300 mb-2">
+                  Click the copy button to copy the ABI.
+                </p>
+                <div className="relative w-full h-48 rounded overflow-hidden border border-slate-700">
+                  <Image
+                    src="/images/20.jpg"
+                    alt="Copying the ABI"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+              </div>
+
+              <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
+                <h3 className="font-semibold text-lg mb-2">Step 14: Name contract</h3>
+                <p className="text-slate-300 mb-3">
+                  Name the contract as 'Mint' and click 'Deploy Contract'.
+                </p>
+                <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
+                  <Image
+                    src="/images/21.jpg"
+                    alt="Naming the contract"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+              </div>
+
+              <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
+                <h3 className="font-semibold text-lg mb-2">Step 15: Confirm transaction</h3>
+                <p className="text-slate-300 mb-3">
+                  Confirm and send the deployment transaction.
+                </p>
+                <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
+                  <Image
+                    src="/images/22.jpg"
+                    alt="Confirming the transaction"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+              </div>
+
+              <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
+                <h3 className="font-semibold text-lg mb-2">Step 16: Sign approval</h3>
+                <p className="text-slate-300 mb-3">
+                  Click 'Sign' to approve the deployment.
+                </p>
+                <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
+                  <Image
+                    src="/images/23.jpg"
+                    alt="Signing the approval"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+              </div>
+
+              <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
+                <h3 className="font-semibold text-lg mb-2">Step 17: Broadcast confirmation</h3>
+                <p className="text-slate-300 mb-3">
+                  Click 'Confirm' to broadcast the contract deployment to the blockchain.
+                </p>
+                <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
+                  <Image
+                    src="/images/24.jpg"
+                    alt="Broadcasting confirmation"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Section 5 */}
+          <div id="section-5" className="mb-10">
+            <h2 className="text-xl font-bold text-blue-400 mb-4 pb-2 border-b border-slate-700">
+              Retrieving the Contract Address
+            </h2>
+            
+            <div className="space-y-8">
+              <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
+                <h3 className="font-semibold text-lg mb-2">Step 18: Copy your deployed contract address</h3>
+                <p className="text-slate-300 mb-3">
+                  Copy your deployed contract address from BscScan.
+                </p>
+                
+                <p className="text-slate-300 mb-2">
+                  Click 'View on BscScan' to check the transaction.
+                </p>
+                <div className="relative w-full h-48 rounded overflow-hidden border border-slate-700 mb-4">
+                  <Image
+                    src="/images/25.jpg"
+                    alt="Viewing on BscScan"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+                
+                <p className="text-slate-300 mb-2">
+                  Scroll down to find the contract address under 'To:' (marked as 'Created'). Copy the contract address.
+                </p>
+                <div className="relative w-full h-48 rounded overflow-hidden border border-slate-700">
+                  <Image
+                    src="/images/26.jpg"
+                    alt="Copying contract address"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Section 6 */}
+          <div id="section-6" className="mb-10">
+            <h2 className="text-xl font-bold text-blue-400 mb-4 pb-2 border-b border-slate-700">
+              Checking Mint Parameters
+            </h2>
+            
+            <div className="space-y-8">
+              <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
+                <h3 className="font-semibold text-lg mb-2">Step 19: Use mint parameter checker</h3>
+                <p className="text-slate-300 mb-3">
+                  Use a mint parameter checker to verify your contract:
+                </p>
+                <ul className="list-disc pl-6 mb-3 text-slate-300">
+                  <li>Web version: mintchecker.vercel.app/mintchecker</li>
+                  <li>Local method (not available on iOS):</li>
+                  <li>Open the HTML file in your browser.</li>
+                  <li>Or, use a terminal to run the cURL command.</li>
+                  <li>(All files are available in the Telegram channel.)</li>
+                </ul>
+              </div>
+
+              <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
+                <h3 className="font-semibold text-lg mb-2">Step 20: Input contract address</h3>
+                <p className="text-slate-300 mb-3">
+                  Input the contract address and click 'Check Contract'.
+                </p>
+                <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
+                  <Image
+                    src="/images/27.jpg"
+                    alt="Inputting contract address"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+              </div>
+
+              <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
+                <h3 className="font-semibold text-lg mb-2">Step 21: Check minting status</h3>
+                <p className="text-slate-300 mb-3">
+                  If minting is not enabled, you must manually call the function by adding BNB to your contract.
+                </p>
+                <ul className="list-disc pl-6 mb-3 text-slate-300">
+                  <li>Most contracts require 0.1 BNB for minting.</li>
+                  <li>The maximum BNB limit is specified in the mint parameters.</li>
+                </ul>
+              </div>
+
+              <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
+                <h3 className="font-semibold text-lg mb-2">Step 22: Enable minting</h3>
+                <p className="text-slate-300 mb-3">
+                  To enable minting:
+                </p>
+                <ul className="list-disc pl-6 mb-3 text-slate-300">
+                  <li>Send BNB from the same wallet used for deployment to the contract address.</li>
+                  <li>This ensures a contract call is made.</li>
+                </ul>
+                <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
+                  <Image
+                    src="/images/29.jpg"
+                    alt="Enabling minting"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+              </div>
+
+              <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
+                <h3 className="font-semibold text-lg mb-2">Step 23: Verify minting enabled</h3>
+                <p className="text-slate-300 mb-3">
+                  After a successful transaction, check the mint parameters again to confirm minting is enabled.
+                </p>
+                <ul className="list-disc pl-6 mb-3 text-slate-300">
+                  <li>90% of contracts enable minting at this stage.</li>
+                  <li>If not, repeat the process until the contract is enabled.</li>
+                </ul>
+                <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
+                  <Image
+                    src="/images/30.jpg"
+                    alt="Verifying minting is enabled"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Section 7 */}
+          <div id="section-7" className="mb-10">
+            <h2 className="text-xl font-bold text-blue-400 mb-4 pb-2 border-b border-slate-700">
+              Receiving Minted USDC
+            </h2>
+            
+            <div className="space-y-8">
+              <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
+                <h3 className="font-semibold text-lg mb-2">Step 24: Receive minted USDC</h3>
+                <p className="text-slate-300 mb-3">
+                  Once minting is enabled, a contract interaction will occur.
+                </p>
+                <ul className="list-disc pl-6 mb-3 text-slate-300">
+                  <li>The specified amount of USDC and BNB used for minting will be added to your wallet balance.</li>
+                </ul>
+                <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
+                  <Image
+                    src="/images/31.jpg"
+                    alt="Receiving minted USDC"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="text-center mt-8">
