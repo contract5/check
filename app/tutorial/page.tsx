@@ -138,7 +138,7 @@ export default function Tutorial() {
               <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
                 <h3 className="font-semibold text-lg mb-2">Step 6: Access wallet</h3>
                 <p className="text-slate-300 mb-3">
-                  Click 'Access My Wallet' to connect Rabby Wallet.
+                  Click &apos;Access My Wallet&apos; to connect Rabby Wallet.
                 </p>
                 <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
                   <Image
@@ -154,7 +154,7 @@ export default function Tutorial() {
               <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
                 <h3 className="font-semibold text-lg mb-2">Step 7: Select Browser Extension</h3>
                 <p className="text-slate-300 mb-3">
-                  Select 'Browser Extension' to connect with Rabby.
+                  Select &apos;Browser Extension&apos; to connect with Rabby.
                 </p>
                 <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
                   <Image
@@ -184,9 +184,9 @@ export default function Tutorial() {
               </div>
 
               <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
-                <h3 className="font-semibold text-lg mb-2">Step 9: Select BNB and click 'Connect'</h3>
+                <h3 className="font-semibold text-lg mb-2">Step 9: Select BNB and click &apos;Connect&apos;</h3>
                 <p className="text-slate-300 mb-3">
-                  Select BNB and click 'Connect'.
+                  Select BNB and click &apos;Connect&apos;.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
@@ -286,7 +286,7 @@ export default function Tutorial() {
                 
                 <h4 className="font-medium text-slate-300 mb-2">For Bytecode:</h4>
                 <p className="text-slate-300 mb-3">
-                  Open the Telegram channel, locate a posted Hex, and copy it. Click 'Opcode' to reveal the Hex.
+                  Open the Telegram channel, locate a posted Hex, and copy it. Click &apos;Opcode&apos; to reveal the Hex.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <div className="relative w-full h-48 rounded overflow-hidden border border-slate-700">
@@ -364,7 +364,7 @@ export default function Tutorial() {
               <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
                 <h3 className="font-semibold text-lg mb-2">Step 14: Name contract</h3>
                 <p className="text-slate-300 mb-3">
-                  Name the contract as 'Mint' and click 'Deploy Contract'.
+                  Name the contract as &apos;Mint&apos; and click &apos;Deploy Contract&apos;.
                 </p>
                 <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
                   <Image
@@ -396,7 +396,7 @@ export default function Tutorial() {
               <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
                 <h3 className="font-semibold text-lg mb-2">Step 16: Sign approval</h3>
                 <p className="text-slate-300 mb-3">
-                  Click 'Sign' to approve the deployment.
+                  Click &apos;Sign&apos; to approve the deployment.
                 </p>
                 <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
                   <Image
@@ -412,7 +412,7 @@ export default function Tutorial() {
               <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
                 <h3 className="font-semibold text-lg mb-2">Step 17: Broadcast confirmation</h3>
                 <p className="text-slate-300 mb-3">
-                  Click 'Confirm' to broadcast the contract deployment to the blockchain.
+                  Click &apos;Confirm&apos; to broadcast the contract deployment to the blockchain.
                 </p>
                 <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
                   <Image
@@ -441,7 +441,7 @@ export default function Tutorial() {
                 </p>
                 
                 <p className="text-slate-300 mb-2">
-                  Click 'View on BscScan' to check the transaction.
+                  Click &apos;View on BscScan&apos; to check the transaction.
                 </p>
                 <div className="relative w-full h-48 rounded overflow-hidden border border-slate-700 mb-4">
                   <Image
@@ -454,7 +454,7 @@ export default function Tutorial() {
                 </div>
                 
                 <p className="text-slate-300 mb-2">
-                  Scroll down to find the contract address under 'To:' (marked as 'Created'). Copy the contract address.
+                  Scroll down to find the contract address under &apos;To:&apos; (marked as &apos;Created&apos;). Copy the contract address.
                 </p>
                 <div className="relative w-full h-48 rounded overflow-hidden border border-slate-700">
                   <Image
@@ -493,7 +493,7 @@ export default function Tutorial() {
               <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
                 <h3 className="font-semibold text-lg mb-2">Step 20: Input contract address</h3>
                 <p className="text-slate-300 mb-3">
-                  Input the contract address and click 'Check Contract'.
+                  Input the contract address and click &apos;Check Contract&apos;.
                 </p>
                 <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
                   <Image
