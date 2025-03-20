@@ -265,7 +265,7 @@ export default function Tutorial() {
               <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
                 <h3 className="font-semibold text-lg mb-2">Step 12: Navigate to Deploy Contract</h3>
                 <p className="text-slate-300 mb-3">
-                  Navigate to Contracts > Deploy Contract.
+                  Navigate to Contracts &gt; Deploy Contract.
                 </p>
                 <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
                   <Image
