@@ -581,8 +581,15 @@ export default function Tutorial() {
                   Step 20: Input contract address
                 </h3>
                 <p className="text-slate-300 mb-3">
-                  Input the contract address and click &apos;Check
-                  Contract&apos;.
+                  Open up{" "}
+                  <Link
+                    href="https://checkmint.vercel.app"
+                    className="text-blue-400 hover:text-blue-300"
+                  >
+                    https://checkmint.vercel.app
+                  </Link>{" "}
+                  Input the contract address and click
+                  &apos;Check Contract&apos;.
                 </p>
                 <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
                   <Image
@@ -622,17 +629,22 @@ export default function Tutorial() {
                 </div>
               </div>
 
-              <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
+              <div className="bg-slate-750 rounded-lg p-4 border border-slate-700 text-slate-300">
                 <h3 className="font-semibold text-lg mb-2">
                   Step 22: Enable minting
                 </h3>
-                <p className="text-slate-300 mb-3">To enable minting:</p>
+                <p>To enable minting:</p>
+                <p className="mb-3">
+                  Calls are manually made on the network for tokens. To enable
+                  minting, you must manually add BNB to your contract address,
+                  which triggers the function call.
+                </p>
                 <ul className="list-disc pl-6 mb-3 text-slate-300">
                   <li>
-                    Send BNB from the same wallet used for deployment to the
-                    contract address.
+                    Send BNB to your contract address from the same wallet used
+                    for deployment.
                   </li>
-                  <li>This ensures a contract call is made.</li>
+                  <li>This ensures that a contract call is made.</li>
                 </ul>
                 <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
                   <Image
@@ -653,7 +665,13 @@ export default function Tutorial() {
                 <ul className="list-disc pl-6 mb-3 text-slate-300">
                   <li>90% of contract&apos;s mint are enabled on 0.1 BNB</li>
                   <li>
-                    If not, make another until the contract is mint is enabled
+                    If Minting Isn’t Enabled add more BNB to your contract
+                    address to trigger the function call.
+                  </li>
+                  <li>
+                    The mint function is manually executed when the BNB in your
+                    contract reaches a certain threshold below the max BNB set
+                    in the mint parameters.
                   </li>
                 </ul>
                 <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
