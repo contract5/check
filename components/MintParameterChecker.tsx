@@ -112,45 +112,47 @@ done`;
   };
 
   return (
-    <div className="space-y-8">
-      <div className="bg-slate-800 rounded-xl p-6 border border-slate-700 shadow-lg">
-        <h3 className="font-semibold text-xl mb-4 text-white flex items-center gap-2">
-          <Terminal className="w-5 h-5" />
-          Step 19: Use mint parameter checker
+    <div className="space-y-4 sm:space-y-8 max-w-full overflow-hidden">
+      <div className="bg-slate-800 rounded-xl p-3 sm:p-6 border border-slate-700 shadow-lg">
+        <h3 className="font-semibold text-lg sm:text-xl mb-3 sm:mb-4 text-white flex items-center gap-2">
+          <Terminal className="w-4 h-4 sm:w-5 sm:h-5" />
+          <span className="break-words">Step 19: Use mint parameter checker</span>
         </h3>
 
-        <p className="text-slate-300 mb-4">
+        <p className="text-slate-300 mb-3 sm:mb-4 text-sm sm:text-base">
           Use a mint parameter checker to verify your contract:
         </p>
 
         {/* Keccak Code Block */}
-        <div className="mb-6 bg-slate-900 rounded-lg overflow-hidden border border-slate-700">
-          <div className="p-3 bg-slate-800 border-b border-slate-700">
-            <p className="text-slate-300 font-mono text-sm">
+        <div className="mb-4 sm:mb-6 bg-slate-900 rounded-lg overflow-hidden border border-slate-700">
+          <div className="p-2 sm:p-3 bg-slate-800 border-b border-slate-700">
+            <p className="text-slate-300 font-mono text-xs sm:text-sm">
               The mint checker checks for the call function:
             </p>
           </div>
           <div className="relative group">
-            <pre className="p-4 text-sm text-slate-300 overflow-x-auto bg-slate-900">
+            <pre className="p-2 sm:p-4 text-xs sm:text-sm text-slate-300 overflow-x-auto bg-slate-900">
               <code>{keccakCode}</code>
             </pre>
             <button
               onClick={() => handleCopy(keccakCode, 'keccak')}
-              className="absolute top-2 right-2 p-2 text-slate-400 hover:text-white bg-slate-800 rounded-md transition-colors"
+              className="absolute top-1 right-1 sm:top-2 sm:right-2 p-1.5 sm:p-2 text-slate-400 hover:text-white bg-slate-800 rounded-md transition-colors"
             >
-              {copyStatus.keccak ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              {copyStatus.keccak ? <Check className="w-3 h-3 sm:w-4 sm:h-4" /> : <Copy className="w-3 h-3 sm:w-4 sm:h-4" />}
             </button>
           </div>
         </div>
 
         {/* Access Methods */}
-        <div className="space-y-4 mb-6">
-          <div className="flex items-center gap-2 text-slate-300">
-            <Globe className="w-5 h-5" />
-            <span className="font-semibold">Web version:</span>
+        <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 text-slate-300">
+            <div className="flex items-center gap-2">
+              <Globe className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="font-semibold text-sm sm:text-base">Web version:</span>
+            </div>
             <a
               href="https://mintchecker.vercel.app/mintchecker"
-              className="text-blue-400 hover:text-blue-300 transition-colors"
+              className="text-blue-400 hover:text-blue-300 transition-colors text-sm sm:text-base break-all"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -159,36 +161,36 @@ done`;
           </div>
           
           <div className="flex items-center gap-2 text-slate-300">
-            <Terminal className="w-5 h-5" />
-            <span className="font-semibold">Local method (not available on iOS):</span>
+            <Terminal className="w-4 h-4 sm:w-5 sm:h-5" />
+            <span className="font-semibold text-sm sm:text-base">Local method (not available on iOS):</span>
           </div>
         </div>
 
         {/* Script Code Block */}
         <div className="bg-slate-900 rounded-lg overflow-hidden border border-slate-700">
           <div className="relative group">
-            <pre className="p-4 text-sm text-slate-300 overflow-x-auto max-h-96 bg-slate-900">
+            <pre className="p-2 sm:p-4 text-xs sm:text-sm text-slate-300 overflow-x-auto max-h-64 sm:max-h-96 bg-slate-900">
               <code>{scriptCode}</code>
             </pre>
             <button
               onClick={() => handleCopy(scriptCode, 'script')}
-              className="absolute top-2 right-2 p-2 text-slate-400 hover:text-white bg-slate-800 rounded-md transition-colors"
+              className="absolute top-1 right-1 sm:top-2 sm:right-2 p-1.5 sm:p-2 text-slate-400 hover:text-white bg-slate-800 rounded-md transition-colors"
             >
-              {copyStatus.script ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              {copyStatus.script ? <Check className="w-3 h-3 sm:w-4 sm:h-4" /> : <Copy className="w-3 h-3 sm:w-4 sm:h-4" />}
             </button>
           </div>
         </div>
 
         {/* Footer Links */}
-        <div className="mt-6 flex items-center gap-4 text-sm">
+        <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm">
           <a
             href="#"
             className="flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors"
           >
-            <Download className="w-4 h-4" />
+            <Download className="w-3 h-3 sm:w-4 sm:h-4" />
             Download HTML file
           </a>
-          <span className="text-slate-500">|</span>
+          <span className="hidden sm:inline text-slate-500">|</span>
           <span className="text-slate-300">
             All files available in Telegram channel
           </span>
