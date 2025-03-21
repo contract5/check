@@ -122,7 +122,7 @@ done`;
           </span>
         </h3>
         <p className="text-slate-300 mb-3 sm:mb-4 text-sm sm:text-base">
-          Use a mint parameter checker to verify your contract:
+          Use a mint parameters Download checker to check the mint parameters
         </p>
         {/* Keccak Code Block */}
         <div className="bg-slate-900 rounded-lg overflow-hidden border border-slate-700">
@@ -220,7 +220,7 @@ done`;
 
         <div className="mt-4  text-sm sm:text-base text-slate-300 space-y-2">
           <p>
-            Or download a local webpage interface to check the mint parameters{" "}
+            Download a local webpage interface to check the mint parameters{" "}
             <br />
             Download html file and open with chrome browser
           </p>

@@ -74,13 +74,13 @@ export default function Tutorial() {
                 </p>
                 <div className="mb-3">
                   <a
-                    href="link.com"
+                    href="https://apps.apple.com/us/app/rabby-wallet-crypto-evm/id6474381673"
                     className="text-blue-400 hover:text-blue-300 mr-4"
                   >
                     iOS App Store
                   </a>
                   <a
-                    href="link.com"
+                    href="https://play.google.com/store/apps/details?id=com.debank.rabbymobile&pli=1"
                     className="text-blue-400 hover:text-blue-300"
                   >
                     Android Google Play
@@ -600,8 +600,8 @@ export default function Tutorial() {
                   Step 21: Check minting status
                 </h3>
                 <p className="text-slate-300 mb-3">
-                  If minting is not enabled, you must manually call the function
-                  by adding BNB to your contract.
+                  This step displays the maximum mint parameters, the amount of
+                  USDC, the mint status, the maximum BNB, and the called data
                 </p>
                 <ul className="list-disc pl-6 mb-3 text-slate-300">
                   <li>Change to Most contracts mint enable on 0.1 BNB</li>
@@ -611,6 +611,16 @@ export default function Tutorial() {
                     enable its mint function
                   </li>
                 </ul>
+
+                <div className="relative w-full h-56 rounded overflow-hidden border border-slate-700">
+                  <Image
+                    src="/images/28.jpg"
+                    alt="Inputting contract address"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
               </div>
 
               <div className="bg-slate-750 rounded-lg p-4 border border-slate-700">
@@ -640,11 +650,7 @@ export default function Tutorial() {
                 <h3 className="font-semibold text-lg mb-2">
                   Step 23: Verify minting enabled
                 </h3>
-                <p className="text-slate-300 mb-3">
-                  If minting is not enabled, you must manually call the function
-                  by adding BNB to your contract as the blockchain doesn’t
-                  recognize tokens call functions like native BNB
-                </p>
+
                 <ul className="list-disc pl-6 mb-3 text-slate-300">
                   <li>90% of contract&apos;s mint are enabled on 0.1 BNB</li>
                   <li>
@@ -676,7 +682,7 @@ export default function Tutorial() {
                   Step 24: Receive minted USDC
                 </h3>
                 <p className="text-slate-300 mb-3">
-                  Once minting is enabled, a contract interaction will occur.
+                  When the mint is enabled, a contract interaction will occur.
                 </p>
                 <ul className="list-disc pl-6 mb-3 text-slate-300">
                   <li>
