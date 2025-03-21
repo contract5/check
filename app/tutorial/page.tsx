@@ -600,11 +600,10 @@ export default function Tutorial() {
                   Step 21: Check minting status
                 </h3>
                 <p className="text-slate-300 mb-3">
-                  This step displays the maximum mint parameters, the amount of
-                  USDC, the mint status, the maximum BNB, and the called data
+                  This displays the mint parameters, the amount of USDC, the
+                  mint status, the maximum BNB, and the called data
                 </p>
                 <ul className="list-disc pl-6 mb-3 text-slate-300">
-                  <li>Change to Most contracts mint enable on 0.1 BNB</li>
                   <li>
                     The maximum BNB limit is specified in the call function That
                     is the maximum amount of BNB your contract can hold to
