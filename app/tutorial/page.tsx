@@ -641,7 +641,7 @@ export default function Tutorial() {
                 </p>
                 <ul className="list-disc pl-6 mb-3 text-slate-300">
                   <li>
-                    Send BNB to your contract address from the same wallet used
+                    Send 0.1 BNB to your contract address from the same wallet used
                     for deployment.
                   </li>
                   <li>This ensures that a contract call is made.</li>
