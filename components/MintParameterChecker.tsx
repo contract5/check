@@ -18,87 +18,195 @@ export default function MintParameterChecker() {
   const keccakCode = `function keccak_256(Mint)[]: mint_usdc_contract_address(address to, uint256 amount, uint256 fee) external onlyOwner { _mint(to, amount); } : keccak(True or False)`;
 
   const scriptCode = `# Check if Node.js and npm are installed
-command_exists() {
-    command -v "$1" >/dev/null 2>&1
-}
-
-echo "Starting setup..."
-
-if command_exists node && command_exists npm; then
-    echo "✅ Node.js and npm are already installed."
-else
-    echo "📦 Installing Node.js and npm..."
-    pkg update -y && pkg upgrade -y
-    pkg install -y nodejs-lts git
-    echo "✅ Node.js version: $(node -v)"
-    echo "✅ npm version: $(npm -v)"
-fi
-
-# Initialize npm project
-echo "📦 Setting up npm project..."
-rm -f package.json package-lock.json
-npm init -y
-
-# Configure package.json
-echo "📜 Configuring package.json..."
-cat > package.json <<EOF
-{
-  "type": "module",
-  "dependencies": {
-    "ethers": "^5.8.0",
-    "web3": "^4.16.0"
+  command_exists() {
+      command -v "$1" >/dev/null 2>&1
   }
-}
-EOF
-
-# Install dependencies
-echo "📦 Installing npm dependencies..."
-npm install
-
-# Function to validate Ethereum address format
-is_valid_eth_address() {
-    [[ $1 =~ ^0x[a-fA-F0-9]{40}$ ]]
-}
-
-# Get a valid contract address
-while true; do
-    read -p "🔹 Enter the contract address: " contractAddress
-
-    if ! is_valid_eth_address "$contractAddress"; then
-        echo "❌ Invalid format. Please enter a valid Ethereum contract address."
-        continue
-    fi
-
-    # Test contract address
-    cat > testContract.js <<EOF
-import Web3 from "web3";
-const contractAddress = "$contractAddress";
-const abi = [{ "inputs": [], "stateMutability": "view", "name": "mintStorage", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "type": "function" }];
-const web3 = new Web3("https://bsc-dataseed.binance.org/");
-const contract = new web3.eth.Contract(abi, contractAddress);
-
-async function testContract() {
-    try {
-        await contract.methods.mintStorage().call();
-        process.exit(0);
-    } catch (error) {
-        process.exit(1);
+  
+  echo "Starting setup..."
+  
+  # This checks if Node.js and all its dependencies are installed
+  if command_exists node && command_exists npm; then
+      echo "✅ Node.js and npm are already installed. Skipping installation."
+  else
+      echo "📦 Installing Node.js and npm..."
+      pkg update -y && pkg upgrade -y
+      pkg install -y nodejs-lts git
+      echo "✅ Node.js version: $(node -v)"
+      echo "✅ npm version: $(npm -v)"
+  fi
+  
+  # This Initializes npm project (or force overwrite current npm project)
+  echo "📦 Setting up npm project..."
+  rm -f package.json package-lock.json  # Remove old package.json if exists
+  npm init -y
+  
+  # Replaces the package.json with this setup to reduce errors
+  echo "📜 Configuring package.json..."
+  cat > package.json <<EOF
+  {
+    "type": "module",
+    "dependencies": {
+      "ethers": "^5.8.0",
+      "web3": "^4.16.0"
     }
-}
-
-testContract();
-EOF
-
-    node testContract.js
-    if [ $? -eq 0 ]; then
-        rm -f testContract.js
-        break
-    else
-        echo "❌ Invalid contract address or issue fetching data. Try again."
-    fi
-
-    rm -f testContract.js
-done`;
+  }
+  EOF
+  
+  # Installing all dependencies
+  echo "📦 Installing npm dependencies..."
+  npm install
+  
+  # This function validates the Ethereum address format to eliminate input errors
+  is_valid_eth_address() {
+      [[ $1 =~ ^0x[a-fA-F0-9]{40}$ ]]
+  }
+  
+  # This loops the request, just so you do not restart the whole process
+  get_valid_contract_address() {
+      while true; do
+          read -p "🔹 Enter the contract address: " contractAddress
+  
+          # Checks the format
+          if ! is_valid_eth_address "$contractAddress"; then
+              echo "❌ Invalid format. Please enter a *valid* Ethereum contract address."
+              continue
+          fi
+  
+          # Creates the temporary JS file to check the contract address
+          cat > testContract.js <<EOF
+  import Web3 from "web3";
+  const contractAddress = "$contractAddress";
+  const abi = [{ "inputs": [], "stateMutability": "view", "name": "mintStorage", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "type": "function" }];
+  const web3 = new Web3("https://bsc-dataseed.binance.org/");
+  const contract = new web3.eth.Contract(abi, contractAddress);
+  
+  async function testContract() {
+      try {
+          await contract.methods.mintStorage().call();
+          process.exit(0);
+      } catch (error) {
+          process.exit(1);
+      }
+  }
+  
+  testContract();
+  EOF
+  
+          # This checks the address and validates the contract
+          node testContract.js
+          if [ $? -eq 0 ]; then
+              rm -f testContract.js  # Remove the temp contract js file
+              break  # Validation successful, exit loop
+          else
+              echo "❌ Invalid contract address or issue fetching data. Please try again."
+          fi
+  
+          rm -f testContract.js
+      done
+  }
+  
+  # Gets a valid contract address
+  get_valid_contract_address
+  
+  # Creates the mintChecker.js script, also added keccak to check the mint status
+  cat > mintChecker.js <<EOF
+  import Web3 from "web3";
+  import { keccak256 } from "ethereum-cryptography/keccak.js";
+  import { utf8ToBytes } from "ethereum-cryptography/utils.js";
+  import fs from "fs";
+  
+  const contractAddress = "$contractAddress"; // This inputs your contract address
+  const abi = [{
+    "inputs": [],
+    "stateMutability": "view",
+    "name": "mintStorage",
+    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "type": "function"
+  }];
+  
+  const BNB_RPC_URL = "https://bsc-dataseed.binance.org/";
+  const web3 = new Web3(BNB_RPC_URL);
+  const contract = new web3.eth.Contract(abi, contractAddress);
+  
+  async function checkMint() {
+    try {
+      const result = await contract.methods.mintStorage().call();
+      console.log("\\n🟡 Mint parameters:\\n", result);
+  
+      // Saves to a temporary file to process
+      fs.writeFileSync("mintparameters.txt", result);
+  
+      // This extracts the Keccak hash to determine if minting has been enabled
+      const parts = result.split(" : ");
+      if (parts.length < 2) {
+        console.log("❌ Could not extract Keccak hash.");
+        return;
+      }
+      const extractedKeccak = parts[parts.length - 1].trim();
+      console.log("\\n🔹 Extracted Keccak Hash:", extractedKeccak);
+  
+      // Compare Keccak of "True"
+      const keccakTrue = Buffer.from(keccak256(utf8ToBytes("True"))).toString("hex");
+      console.log("🔹 Keccak(True):", keccakTrue);
+  
+      if (extractedKeccak === keccakTrue) {
+        console.log("✅ The contract Mint is enabled ");
+      } else {
+        console.log("❌ The contract Mint is not enabled ");
+      }
+  
+      // Read from the temporary file
+      const fileData = fs.readFileSync("mintparameters.txt", "utf8");
+  
+      // This finds all numbers with at least 10 digits, kind of lazy on this part, so it just finds the values on the contract
+      const numberMatch = fileData.match(/\\b\\d{10,}\\b/g);
+      if (numberMatch && numberMatch.length >= 2) {
+        const usdcAmount = numberMatch[0];  // First number is the USDC
+        const bnb = numberMatch[1];  // Second number is Max BNB
+  
+        console.log("\\n *Raw Extracted Values:*");
+        console.log(\`   USDC Amount (Wei): \${usdcAmount}\`);
+        console.log(\`   Max BNB (Wei): \${bnb}\`);
+  
+        // Convert from Wei (18 decimals) to readable numbers
+        const usdcAmountDecimal = web3.utils.fromWei(usdcAmount, "ether");
+        const bnbDecimal = web3.utils.fromWei(bnb, "ether");
+  
+        console.log("\\n *Converted Values*:");
+        console.log(\`   USDC Amount: \${usdcAmountDecimal} USDC\`);
+        console.log(\`   Max BNB: \${bnbDecimal} BNB\\n\`);
+      } else {
+        console.log("\\n⚠ Could not extract numeric values.");
+      }
+  
+      // Fetch contract balance *after* max BNB display
+      try {
+        const balanceWei = await web3.eth.getBalance(contractAddress);
+        const balanceBNB = web3.utils.fromWei(balanceWei, "ether");
+        console.log(\`\\n💰 Contract Address Balance: \${balanceBNB} BNB\`);
+      } catch (error) {
+        console.log("❌ Error fetching contract balance.");
+      }
+  
+      // Clean up Termux
+      fs.unlinkSync("mintparameters.txt");
+  
+    } catch (error) {
+      console.log("❌ Unexpected error occurred while fetching contract data.");
+    }
+  }
+  
+  checkMint();
+  EOF
+  
+  # This runs the mintChecker script
+  echo "🚀 Running mintChecker.js..."
+  node mintChecker.js
+  
+  # Clean up
+  rm -f mintChecker.js
+  echo "✅ Termux clean."
+  `;
 
   const handleCopy = async (text: string, type: CopyKeyType): Promise<void> => {
     try {
